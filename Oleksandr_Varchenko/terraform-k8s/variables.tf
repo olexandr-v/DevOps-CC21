@@ -31,3 +31,10 @@ variable "instance_type" {
   default     = "t3.medium"
   type        = string
 }
+
+variable "instance_disk_size" {
+  description = "Enter instance type disk size, default 20 GiB"
+  default     = 20
+  type        = number
+}
+

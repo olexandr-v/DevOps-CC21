@@ -44,6 +44,7 @@ resource "aws_eks_node_group" "eks-node-group" {
   node_role_arn   = aws_iam_role.node.arn
   subnet_ids      = aws_subnet.subnet[*].id
   instance_types  = ["${var.instance_type}"]
+  disk_size       = var.instance_disk_size
 
   scaling_config {
     desired_size = var.desired_size
