@@ -23,7 +23,7 @@ export AWS_DEFAULT_REGION=eu-central-1
 - Change values in `./variables.tf`, or apply with -var
 ```bash
 terraform apply -auto-approve \
-  -var="cluster-name" \
+  -var="cluster_name" \
   -var="desired_size=3" \
   -var="max_size=4" \
   -var="instance_type=t2.micro"

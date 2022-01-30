@@ -2,7 +2,7 @@ variable "aws_region" {
   default = "eu-central-1"
 }
 
-variable "cluster-name" {
+variable "cluster_name" {
   description = "Enter your claster name"
   default     = "terraform-eks"
   type        = string

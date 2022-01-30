@@ -6,7 +6,7 @@
 #
 
 resource "aws_iam_role" "cluster" {
-  name = "${var.cluster-name}-cluster"
+  name = "${var.cluster_name}-cluster"
 
   assume_role_policy = <<POLICY
 {
@@ -35,7 +35,7 @@ resource "aws_iam_role_policy_attachment" "cluster-AmazonEKSVPCResourceControlle
 }
 
 resource "aws_security_group" "cluster" {
-  name        = "${var.cluster-name}-cluster"
+  name        = "${var.cluster_name}-cluster"
   description = "Cluster communication with worker nodes"
   vpc_id      = aws_vpc.vpc.id
 
@@ -47,7 +47,7 @@ resource "aws_security_group" "cluster" {
   }
 
   tags = {
-    Name = var.cluster-name
+    Name = var.cluster_name
   }
 }
 
@@ -62,7 +62,7 @@ resource "aws_security_group_rule" "cluster-ingress-workstation-https" {
 }
 
 resource "aws_eks_cluster" "eks" {
-  name     = var.cluster-name
+  name     = var.cluster_name
   role_arn = aws_iam_role.cluster.arn
 
   vpc_config {
