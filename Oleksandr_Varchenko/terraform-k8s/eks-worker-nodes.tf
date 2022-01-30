@@ -47,9 +47,9 @@ resource "aws_eks_node_group" "eks-node-group" {
   disk_size       = var.instance_disk_size
 
   scaling_config {
-    desired_size = var.desired_size
-    max_size     = var.max_size
-    min_size     = var.min_size
+    desired_size = var.nodes_desired_size
+    max_size     = var.nodes_max_size
+    min_size     = var.nodes_min_size
   }
 
   depends_on = [
