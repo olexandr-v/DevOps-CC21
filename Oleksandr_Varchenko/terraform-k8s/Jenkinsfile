@@ -10,15 +10,12 @@ pipeline {
     }
  
     stages {
-        stage("Terraform") {
+        stage("Terraform AWS EKS") {
             steps {
                 sh '''#!/bin/bash
-                    pwd
-                    ls -la
                     cd Oleksandr_Varchenko/terraform-k8s/
                     terraform init
-                    echo -----------------------
-                    terraform plan
+                    terraform $TERRAFORM_APPLY_DESTROY -auto-approve
                 '''
             }
         }
