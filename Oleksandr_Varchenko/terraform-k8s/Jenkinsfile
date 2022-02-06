@@ -16,8 +16,8 @@ pipeline {
                     cd Oleksandr_Varchenko/terraform-k8s/
                     terraform init
                     terraform $TERRAFORM_APPLY_DESTROY -auto-approve
-                    if [ $aaa == "apply" ]
-                        then terraform output kubeconfig | sed -e "/EOT/d" -e "/^$/d" > ~/.kube/config
+                    if [ $TERRAFORM_APPLY_DESTROY == "apply" ] then 
+                        terraform output kubeconfig | sed -e "/EOT/d" -e "/^$/d" > ~/.kube/config
                     fi 
                 '''
             }
