@@ -1,0 +1,30 @@
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent any
+    stages {
+        stage("Terraform AWS EKS") {
+            steps {
+                build job: 'Terraform AWS EKS'
+                sh 'sleep 10'
+            }
+        }
+        stage("Deploy Drupal (helm)") {
+            steps {
+                build job: 'Deploy Drupal (helm)'
+                sh 'sleep 10'
+            }
+        }
+        stage("Landing Page Build Image") {
+            steps {
+                build job: 'Landing Page Build Image'
+                sh 'sleep 10'
+            }
+        }
+        stage("Landing Page Deploy") {
+            steps {
+                build job: 'Landing Page Deploy'
+            }
+        }
+    }
+}
