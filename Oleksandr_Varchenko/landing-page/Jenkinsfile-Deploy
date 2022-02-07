@@ -9,27 +9,13 @@ pipeline {
         AWS_DEFAULT_REGION='eu-central-1'
         DOCKERHUB_USER = credentials('DOCKERHUB_USER')
         DOCKERHUB_TOKEN = credentials('DOCKERHUB_TOKEN')
-        CURRENT_DATE = """${sh(
-                returnStdout: true,
-                script: 'date +%Y%m%d%H%M%S'
-            )}""".trim()
     }
  
     stages {
-        stage("Build Image And Push") {
-            steps {
-                sh '''#!/bin/bash
-                    cd Oleksandr_Varchenko/landing-page/ && \
-                    sudo docker build -t $DOCKERHUB_USER/landing-page:${CURRENT_DATE} . && \
-                    sudo docker rmi $(sudo docker images -f "dangling=true" -q) && \
-                    sudo docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN && \
-                    sudo docker push $DOCKERHUB_USER/landing-page:${CURRENT_DATE}
-                '''
-            }
-        }
         stage("Deploy") {
             steps {
                 sh '''#!/bin/bash
+                    CURRENT_DATE=$(cat ~/CURRENT_DATE) && \
                     cd Oleksandr_Varchenko/landing-page/ && \
                     sed -i "s/LAST_TAG/${CURRENT_DATE}/g" landing-page.yml && \
                     kubectl apply -f landing-page.yml
