@@ -24,6 +24,12 @@ pipeline {
         stage("Landing Page Deploy") {
             steps {
                 build job: 'Landing Page Deploy'
+                sh 'sleep 10'
+            }
+        }
+        stage("Deploy Prometheus Grafana") {
+            steps {
+                build job: 'Deploy Prometheus Grafana'
             }
         }
     }
