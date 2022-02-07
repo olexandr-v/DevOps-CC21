@@ -3,8 +3,9 @@ version: '3'
 services:
 
   jenkins:
-    # build: . # if you don't have registry uncomment this
-    image: docker.localhost:5000/jenkins-with-docker:jdk11
+    build: . # if you don't have registry uncomment this
+    image: jenkins-with-docker-terraform-helm:lts-jdk11
+    # image: docker.localhost:5000/jenkins-with-docker:jdk11
     extra_hosts:
     - docker.localhost:host-gateway
     ports:
