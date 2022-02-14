@@ -23,7 +23,7 @@ pipeline {
                     sudo docker build -t $DOCKERHUB_USER/landing-page:latest -t $DOCKERHUB_USER/landing-page:${CURRENT_DATE} . && \
                     sudo docker rmi $(sudo docker images -f "dangling=true" -q) && \
                     sudo docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN && \
-                    sudo docker push $DOCKERHUB_USER/landing-page:${CURRENT_DATE}
+                    sudo docker push $DOCKERHUB_USER/landing-page:latest $DOCKERHUB_USER/landing-page:${CURRENT_DATE}
                     echo $CURRENT_DATE > ~/CURRENT_DATE
                 '''
             }
