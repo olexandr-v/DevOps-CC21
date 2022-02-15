@@ -2,6 +2,10 @@ properties([disableConcurrentBuilds()])
 
 pipeline {
     agent any
+    
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '3'))
+    }
 
     environment { 
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')

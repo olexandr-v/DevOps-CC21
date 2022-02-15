@@ -2,6 +2,11 @@ properties([disableConcurrentBuilds()])
 
 pipeline {
     agent any
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '3'))
+    }
+
     stages {
         stage("Terraform AWS EKS") {
             steps {
