@@ -3,6 +3,10 @@ properties([disableConcurrentBuilds()])
 pipeline {
     agent any
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '3'))
+    }
+
     environment {
         DOCKERHUB_USER = credentials('DOCKERHUB_USER')
         DOCKERHUB_TOKEN = credentials('DOCKERHUB_TOKEN')
