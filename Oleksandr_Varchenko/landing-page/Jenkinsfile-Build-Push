@@ -1,4 +1,5 @@
 properties([disableConcurrentBuilds()])
+properties([pipelineTriggers([githubPush()])])
 
 pipeline {
     agent any
