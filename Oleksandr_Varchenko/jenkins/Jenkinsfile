@@ -1,9 +1,11 @@
+// Do not allow concurrent builds
 properties([disableConcurrentBuilds()])
 
 pipeline {
     agent any
 
     options {
+        // Max # of builds to keep
         buildDiscarder(logRotator(numToKeepStr: '3'))
     }
 
@@ -17,19 +19,19 @@ pipeline {
         stage("Deploy Drupal (helm)") {
             steps {
                 build job: 'Deploy Drupal (helm)'
-                sh 'sleep 10'
+                sh 'sleep 5'
             }
         }
         stage("Landing Page Build Image") {
             steps {
                 build job: 'Landing Page Build Image'
-                sh 'sleep 10'
+                sh 'sleep 5'
             }
         }
         stage("Landing Page Deploy") {
             steps {
                 build job: 'Landing Page Deploy'
-                sh 'sleep 10'
+                sh 'sleep 5'
             }
         }
         stage("Deploy Prometheus Grafana") {
