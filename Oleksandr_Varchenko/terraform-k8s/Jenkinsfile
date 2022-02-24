@@ -1,10 +1,13 @@
+// Do not allow concurrent builds
 properties([disableConcurrentBuilds()])
+// GitHub hook trigger for GITScm polling
 properties([pipelineTriggers([githubPush()])])
 
 pipeline {
     agent any
     
     options {
+        // Max # of builds to keep
         buildDiscarder(logRotator(numToKeepStr: '3'))
     }
 
@@ -12,6 +15,11 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_DEFAULT_REGION='eu-central-1'
+    }
+
+    parameters {
+        // First choise default
+        choice(name: "TERRAFORM_APPLY_DESTROY", choices: ["apply", "destroy"], description: "Terraform apply or destroy AWS EKS")
     }
  
     stages {
@@ -21,8 +29,9 @@ pipeline {
                     cd Oleksandr_Varchenko/terraform-k8s/
                     terraform init
                     terraform $TERRAFORM_APPLY_DESTROY -auto-approve
-                    if [ $TERRAFORM_APPLY_DESTROY == "apply" ]; \
-                        then terraform output kubeconfig | sed -e "/EOT/d" -e "/^$/d" > ~/.kube/config; \
+                    if [[ $TERRAFORM_APPLY_DESTROY == "apply" ]]; then
+                        # Sed is needed to remove empty lines and EOT
+                        terraform output kubeconfig | sed -e "/EOT/d" -e "/^$/d" > ~/.kube/config
                     fi 
                 '''
             }
