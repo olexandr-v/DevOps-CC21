@@ -1,0 +1,26 @@
+// Do not allow concurrent builds
+properties([disableConcurrentBuilds()])
+// GitHub hook trigger for GITScm polling
+properties([pipelineTriggers([githubPush()])])
+
+pipeline {
+    agent any
+
+    options {
+        // Max # of builds to keep
+        buildDiscarder(logRotator(numToKeepStr: '3'))
+    }
+
+    stages {
+        stage("Landing Page Build Image") {
+            steps {
+                build job: 'Landing Page Build Image'
+            }
+        }
+        stage("Landing Page Deploy") {
+            steps {
+                build job: 'Landing Page Deploy'
+            }
+        }
+    }
+}

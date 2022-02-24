@@ -1,7 +1,5 @@
 // Do not allow concurrent builds
 properties([disableConcurrentBuilds()])
-// GitHub hook trigger for GITScm polling
-properties([pipelineTriggers([githubPush()])])
 
 pipeline {
     agent any
