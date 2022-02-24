@@ -1,10 +1,13 @@
+// Do not allow concurrent builds
 properties([disableConcurrentBuilds()])
+// GitHub hook trigger for GITScm polling
 properties([pipelineTriggers([githubPush()])])
 
 pipeline {
     agent any
 
     options {
+        // Max # of builds to keep
         buildDiscarder(logRotator(numToKeepStr: '3'))
     }
 
@@ -20,9 +23,11 @@ pipeline {
         stage("Deploy") {
             steps {
                 sh '''#!/bin/bash
-                    CURRENT_DATE=$(cat ~/CURRENT_DATE) && \
-                    cd Oleksandr_Varchenko/landing-page/ && \
-                    sed -i "s/LAST_TAG/${CURRENT_DATE}/g" landing-page.yml && \
+                    # Date from build job
+                    CURRENT_DATE=$(cat ~/CURRENT_DATE)
+                    cd Oleksandr_Varchenko/landing-page/
+                    # Set last tag
+                    sed -i "s/LAST_TAG/${CURRENT_DATE}/g" landing-page.yml
                     kubectl apply -f landing-page.yml
                 '''
             }
