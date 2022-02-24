@@ -36,7 +36,7 @@ pipeline {
         }
         stage("Deploy Prometheus Grafana") {
             steps {
-                build job: 'Deploy Prometheus Grafana'
+                build job: 'Deploy Prometheus Grafana (helm)'
             }
         }
     }
