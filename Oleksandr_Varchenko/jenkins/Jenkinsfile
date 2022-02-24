@@ -19,19 +19,11 @@ pipeline {
         stage("Deploy Drupal (helm)") {
             steps {
                 build job: 'Deploy Drupal (helm)'
-                sh 'sleep 5'
             }
         }
-        stage("Landing Page Build Image") {
+        stage("Landing Page Build and Deploy") {
             steps {
-                build job: 'Landing Page Build Image'
-                sh 'sleep 5'
-            }
-        }
-        stage("Landing Page Deploy") {
-            steps {
-                build job: 'Landing Page Deploy'
-                sh 'sleep 5'
+                build job: 'Landing Page Build and Deploy'
             }
         }
         stage("Deploy Prometheus Grafana") {
